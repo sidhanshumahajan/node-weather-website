@@ -4,7 +4,9 @@ const forecast = (latitude, longitude, callback) => {
     request({
         url: weatherUrl,
         json: true,
-    }, (error, { body }) => {
+    }, (error, {
+        body
+    }) => {
         if (error) {
             callback("Unable to connect to weather service!!", undefined);
         } else if (body.error) {
@@ -15,9 +17,9 @@ const forecast = (latitude, longitude, callback) => {
                 temperature: body.current.temperature,
                 feelslike: body.current.feelslike,
             };
-            callback(undefined,'Weather is '+body.current.weather_descriptions[0]+ 
-            ' It is currently ' + body.current.temperature + ' degress out. But it feelsLike '+body.current.feelslike +' degress out. There is a ' 
-            + body.current.precip + '% chance of rain.');
+            callback(undefined, 'Weather is ' + body.current.weather_descriptions[0] +
+                ' It is currently ' + body.current.temperature + ' degress out. But it feelsLike ' + body.current.feelslike + ' degress out. There is a ' +
+                body.current.precip + '% chance of rain. Their is ' + body.current.humidity + '% humodity');
         }
     });
 };
