@@ -4,7 +4,7 @@ const forecast = require('./utils/forecast');
 const express = require('express');
 const hbs = require('hbs');
 const app = express();
-
+const port = process.env.PORT || 3000
 //define paths for express config
 const publicDirectoryPath = path.join(__dirname, '../public');
 const viewsPath = path.join(__dirname, '../templates/views');
@@ -48,13 +48,21 @@ app.get('/weather', (req, res) => {
             error: 'You must provide an address!'
         });
     }
-    geocode(req.query.address,(error,{latitude, longitude, location } ={}) => {
+    geocode(req.query.address, (error, {
+        latitude,
+        longitude,
+        location
+    } = {}) => {
         if (error) {
-            return res.send({ error });
+            return res.send({
+                error
+            });
         }
         forecast(latitude, longitude, (error, forecastData) => {
             if (error) {
-                return res.send({ error });
+                return res.send({
+                    error
+                });
             }
             res.send({
                 forecast: forecastData,
@@ -80,6 +88,6 @@ app.get('*', (req, res) => {
     });
 });
 // set up a portNo for express server
-app.listen(3000, () => {
-    console.log("server is running");
+app.listen(port, () => {
+    console.log("server is running at" + port);
 });
